@@ -14,8 +14,10 @@ from .forms import PostCreateForm
 
 
 def home(request):
+    common_tags = Post.tags.most_common()[:4]
     context = {
-        'posts': Post.objects.all()
+        'posts': Post.objects.all(),
+        'common_tags': common_tags,
     }
     return render(request, 'blog/home.html', context)
 

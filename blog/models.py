@@ -1,4 +1,5 @@
 from PIL import Image
+from taggit.managers import TaggableManager
 
 from django.db import models
 from django.utils import timezone
@@ -12,6 +13,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to='post_pics')
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
@@ -21,8 +23,8 @@ class Post(models.Model):
 
         img = Image.open(self.image.path)
 
-        if img.height > 500 or img.width > 1200:
-            output_size = (500, 1200)
+        if img.height > 600 or img.width > 800:
+            output_size = (600, 800)
             img.thumbnail(output_size)
             img.save(self.image.path)
 
